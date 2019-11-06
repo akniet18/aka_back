@@ -40,8 +40,12 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
     'django_filters',
+    'taggit',
+    'taggit_serializer',
 ]
 
+
+TAGGIT_CASE_INSENSITIVE = True
 SITE_ID = 1
 APPEND_SLASH=False
 CORS_ORIGIN_ALLOW_ALL = True

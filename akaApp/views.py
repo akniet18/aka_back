@@ -10,6 +10,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.views import APIView
 
 
+
 class ArticleViewset(viewsets.ModelViewSet):
 	permission_classes = [permissions.AllowAny,]
 	# authentication_classes = [SessionAuthentication, TokenAuthentication]
@@ -21,15 +22,30 @@ class ArticleViewset(viewsets.ModelViewSet):
 	filter_fields = ('id', 'author')
 
 	def create(self, request):
-		# if  request.user.is_authenticated():
-			s = ArticleSerializer(data=request.data)
-			if s.is_valid():
-				Article.objects.create(title=s.validated_data['title'], text=s.validated_data['text'], author=request.user)
-				return Response({'status': "created"})
-			else:
-				return Response(s.errors)
-		# else:
-			# return Response({'status': "not authentication"})
+		s = ArticleSerializer(data=request.data)
+		if s.is_valid():
+			Article.objects.create(
+				title=s.validated_data['title'], 
+				text=s.validated_data['text'], 
+				author=request.user,
+				tags=s.validated_data['tags']
+			)
+			return Response({'status': "created"})
+		else:
+			return Response(s.errors)
+
+
+class TagViews(APIView):
+	permission_classes = [permissions.AllowAny,]
+
+	def post(self, request):
+		s = TagSerializer(data=request.data)
+		if s.is_valid():
+			articles = Article.objects.filter(tags__name__in=[s.validated_data['tag']])
+			serializer = ArticleSerializer(articles, many=True)
+			return Response({"articles": serializer.data})
+		else:
+			return Response(s.errors)
 
 
 class addFav(APIView):
@@ -46,3 +62,31 @@ class addFav(APIView):
 			else:
 				a.favorite.add(request.user)
 				return Response({"status": "post add fav"})
+
+
+class CommetViews(viewsets.ModelViewSet):
+	permission_classes = [permissions.AllowAny,]
+	serializer_class = CommentSerilaizer
+	queryset = Comment.objects.all()
+	filter_backends = [DjangoFilterBackend]
+	search_fields = ['article', 'author']
+	filter_fields = ('article', 'author')
+
+	def create(self, request):
+		s = CommentSerilaizer(data=request.data)
+		if s.is_valid():
+			parent_commment = None
+			if Comment.objects.filter(pk=s.validated_data['parent']).exists():
+				parent_commment = Comment.objects.get(pk=s.validated_data['parent'])
+			article = None
+			if Article.objects.filter(pk=s.validated_data['article']).exists():
+				article = Article.objects.get(pk=s.validated_data['article'])
+			Comment.objects.create(
+				text=s.validated_data['text'], 
+				author=request.user,
+				parent=parent_commment,
+				article=article
+			)
+			return Response({'status': "created"})
+		else:
+			return Response(s.errors)
