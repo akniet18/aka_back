@@ -10,7 +10,6 @@ from rest_framework.decorators import permission_classes
 from rest_framework.views import APIView
 
 
-
 class ArticleViewset(viewsets.ModelViewSet):
 	permission_classes = [permissions.AllowAny,]
 	# authentication_classes = [SessionAuthentication, TokenAuthentication]

@@ -22,7 +22,5 @@ urlpatterns = [
     path('', include('akaApp.urls')),
     path('users/', include('users.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/registration/', include('rest_auth.registration.urls')),
 ]
 urlpatterns += staticfiles_urlpatterns()

@@ -35,10 +35,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth',
     'allauth',
     'allauth.account',
-    'rest_auth.registration',
     'django_filters',
     'taggit',
     'taggit_serializer',
@@ -54,27 +52,26 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080',
 )
 
-
-ADMINS = (
-    ('Admin', 'akniet.akniet2016@mail.ru'),
+AUTHENTICATION_BACKENDS = (
+    # default
+    'django.contrib.auth.backends.ModelBackend',
+    # email login
+    # 'allauth.account.auth_backends.AuthenticationBackend',
+    # 'users.backends.EmailOrUsernameModelBackend'
 )
 
-MANAGERS = ADMINS
-
-MAILER_EMAIL_BACKEND = 'django_libs.test_email_backend.EmailBackend'
-TEST_EMAIL_BACKEND_RECIPIENTS = ADMINS
-
-FROM_EMAIL = ADMINS[0][1]
-EMAIL_SUBJECT_PREFIX = '[dev yourprojectname] '
-
-# EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = FROM_EMAIL
-EMAIL_HOST_PASSWORD = 'yourgmailpw'
-EMAIL_PORT = 587
-
-EMAIL_HOST = 'localhost'
-EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = False
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# SENDGRID
+# DEFAULT_FROM_EMAIL = 'notifications@xpro.kz'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'help-xpro'
+# EMAIL_HOST_PASSWORD = '\9r7k83-8DJgD'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
