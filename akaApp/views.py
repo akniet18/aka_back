@@ -8,6 +8,9 @@ from rest_framework import permissions
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.decorators import permission_classes
 from rest_framework.views import APIView
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class ArticleViewset(viewsets.ModelViewSet):
@@ -45,6 +48,18 @@ class TagViews(APIView):
 			return Response({"articles": serializer.data})
 		else:
 			return Response(s.errors)
+
+
+
+class FavPostView(APIView):
+	permission_classes = [permissions.IsAuthenticated,]
+
+	def get(self, request):
+		user = User.objects.get(pk = request.user.pk)
+		posts = user.fav.all()
+		ser = ArticleSerializer(posts, many=True)
+		return Response({'posts': ser.data})
+
 
 
 class addFav(APIView):

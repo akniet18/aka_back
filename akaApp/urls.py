@@ -15,5 +15,7 @@ urlpatterns = [
 	path('', include(router.urls)),
 	path('', include(router2.urls)),
 	path('article/add/', addFav.as_view()),
-	path('tags/', TagViews.as_view())
+	path('tags/', TagViews.as_view()),
+
+	path('favs/', FavPostView.as_view())
 ]
