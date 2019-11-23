@@ -2,10 +2,11 @@ from rest_framework import serializers
 from .models import *
 from taggit_serializer.serializers import (TagListSerializerField,
                                            TaggitSerializer)
+from users.serializers import *
 
 
-
-class CommentSerilaizer(serializers.ModelSerializer):
+class CommSerilaizer(serializers.ModelSerializer):
+	author = UserDSerializer()
 	class Meta:
 		model = Comment
 		fields = "__all__"
@@ -15,9 +16,10 @@ class CommentSerilaizer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
 	tags = TagListSerializerField()
+	comment = CommSerilaizer(many=True, read_only=True)
 	class Meta:
 		model = Article
-		fields = ('id', 'title', 'text', 'views', 'author', 'favorite', 'tags', 'comment')
+		fields = ('id', 'title', 'text', 'views', 'author', 'favorite', 'tags', 'comment', 'date')
 		read_only_fields  = ('author', 'favorite', 'views')
 
 
