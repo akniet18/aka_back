@@ -4,6 +4,15 @@ from taggit_serializer.serializers import (TagListSerializerField,
                                            TaggitSerializer)
 
 
+
+class CommentSerilaizer(serializers.ModelSerializer):
+	class Meta:
+		model = Comment
+		fields = "__all__"
+		read_only_fields  = ('author', 'date')
+
+
+
 class ArticleSerializer(serializers.ModelSerializer):
 	tags = TagListSerializerField()
 	class Meta:
@@ -12,12 +21,15 @@ class ArticleSerializer(serializers.ModelSerializer):
 		read_only_fields  = ('author', 'favorite', 'views')
 
 
+
 class TagSerializer(serializers.Serializer):
 	tag = serializers.CharField()	
 
 
+
 class addFavSer(serializers.Serializer):
 	id = serializers.IntegerField()
+
 
 
 class CommentSerilaizer(serializers.ModelSerializer):
