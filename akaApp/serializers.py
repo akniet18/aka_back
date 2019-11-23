@@ -8,7 +8,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 	tags = TagListSerializerField()
 	class Meta:
 		model = Article
-		fields = ('id', 'title', 'text', 'views', 'author', 'favorite', 'tags')
+		fields = ('id', 'title', 'text', 'views', 'author', 'favorite', 'tags', 'comment')
 		read_only_fields  = ('author', 'favorite', 'views')
 
 

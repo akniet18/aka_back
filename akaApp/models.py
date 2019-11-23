@@ -13,6 +13,9 @@ class Article(models.Model):
 	favorite = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='fav', blank=True)
 	tags = TaggableManager()
 
+	def comment(self):
+		return self.comment.all()
+
 	def __str__(self):
 		return self.title
 
