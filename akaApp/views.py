@@ -54,11 +54,15 @@ class TagViews(APIView):
 class FavPostView(APIView):
 	permission_classes = [permissions.IsAuthenticated,]
 
-	def get(self, request):
-		user = User.objects.get(pk = request.user.pk)
-		posts = user.fav.all()
-		ser = ArticleSerializer(posts, many=True)
-		return Response({'posts': ser.data})
+	def post(self, request):
+		s = addFavSer(data=request.data)
+		if s.is_valid():
+			user = User.objects.get(pk = s.validated_data['id'])
+			posts = user.fav.all()
+			ser = ArticleSerializer(posts, many=True)
+			return Response({'posts': ser.data})
+		else:
+			return Response(s.errors)
 
 
 
