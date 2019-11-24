@@ -17,6 +17,7 @@ class CommSerilaizer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
 	tags = TagListSerializerField()
 	comment = CommSerilaizer(many=True, read_only=True)
+	author = UserDSerializer()
 	class Meta:
 		model = Article
 		fields = ('id', 'title', 'text', 'views', 'author', 'favorite', 'tags', 'comment', 'date')
