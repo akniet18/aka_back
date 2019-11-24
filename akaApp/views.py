@@ -14,7 +14,7 @@ User = get_user_model()
 
 
 class ArticleViewset(viewsets.ModelViewSet):
-	permission_classes = [permissions.AllowAny,]
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly,]
 	# authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 	serializer_class = ArticleSerializer
