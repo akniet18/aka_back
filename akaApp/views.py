@@ -22,7 +22,7 @@ class ArticleViewset(viewsets.ModelViewSet):
 	serializer_class = ArticleSerializer
 	queryset = Article.objects.all()
 	filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-	search_fields = ['author', 'title', 'text', 'tags']
+	search_fields = ['author', 'title', 'text',]
 	filter_fields = ('author', 'tags')
 
 	def create(self, request):
