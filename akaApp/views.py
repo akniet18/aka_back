@@ -9,6 +9,8 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.decorators import permission_classes
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
+from rest_framework import filters
+
 
 User = get_user_model()
 
@@ -19,9 +21,9 @@ class ArticleViewset(viewsets.ModelViewSet):
 
 	serializer_class = ArticleSerializer
 	queryset = Article.objects.all()
-	filter_backends = [DjangoFilterBackend]
-	search_fields = ['id', 'author']
-	filter_fields = ('id', 'author')
+	filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+	search_fields = ['author', 'title', 'text', 'tags']
+	filter_fields = ('author', 'tags')
 
 	def create(self, request):
 		s = ArticleSerializer(data=request.data)
