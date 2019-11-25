@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('akaApp.urls')),
     path('users/', include('users.urls')),
+    path('uploads/', include('uploads.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 if settings.DEBUG: 
