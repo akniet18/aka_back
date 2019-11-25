@@ -96,11 +96,13 @@ class CommetViews(viewsets.ModelViewSet):
 		s = CommentSerilaizer(data=request.data)
 		if s.is_valid():
 			parent_commment = None
-			if Comment.objects.filter(pk=s.validated_data['parent']).exists():
-				parent_commment = Comment.objects.get(pk=s.validated_data['parent'])
+			parent_commment = s.validated_data['parent']
+			# if Comment.objects.filter(pk=s.validated_data['parent']).exists():
+				# parent_commment = Comment.objects.get(pk=s.validated_data['parent'])
 			article = None
-			if Article.objects.filter(pk=s.validated_data['article']).exists():
-				article = Article.objects.get(pk=s.validated_data['article'])
+			# if Article.objects.filter(pk=s.validated_data['article']).exists():
+				# article = Article.objects.get(pk=s.validated_data['article'])
+			article = s.validated_data['article']
 			Comment.objects.create(
 				text=s.validated_data['text'], 
 				author=request.user,
