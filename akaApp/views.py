@@ -20,7 +20,7 @@ class ArticleViewset(viewsets.ModelViewSet):
 	# authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 	serializer_class = ArticleSerializer
-	queryset = Article.objects.all()
+	queryset = Article.objects.all().order_by('-date')
 	filter_backends = [DjangoFilterBackend, filters.SearchFilter]
 	search_fields = ['author__username', 'title', 'text', 'tags__name']
 	filter_fields = ('author',)
