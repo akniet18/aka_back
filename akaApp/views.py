@@ -28,12 +28,14 @@ class ArticleViewset(viewsets.ModelViewSet):
 	def create(self, request):
 		s = ArticleSerializer(data=request.data)
 		if s.is_valid():
-			Article.objects.create(
+			print(s.validated_data['tags'])
+			a = Article.objects.create(
 				title=s.validated_data['title'], 
 				text=s.validated_data['text'], 
 				author=request.user,
-				tags=s.validated_data['tags']
+				# tags=s.validated_data['tags']
 			)
+			a.tags.set(*s.validated_data['tags'])
 			return Response({'status': "created"})
 		else:
 			return Response(s.errors)

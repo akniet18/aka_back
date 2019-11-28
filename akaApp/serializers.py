@@ -1,7 +1,5 @@
 from rest_framework import serializers
 from .models import *
-from taggit_serializer.serializers import (TagListSerializerField,
-                                           TaggitSerializer)
 from users.serializers import *
 
 
@@ -13,9 +11,16 @@ class CommSerilaizer(serializers.ModelSerializer):
 		read_only_fields  = ('author', 'date')
 
 
+		
+class StringListField(serializers.ListField): # get from http://www.django-rest-framework.org/api-guide/fields/#listfield
+    child = serializers.CharField()
+
+    def to_representation(self, data):
+        return ' '.join(data.values_list('name', flat=True))
+
 
 class ArticleSerializer(serializers.ModelSerializer):
-	tags = TagListSerializerField()
+	tags = StringListField()
 	author = UserDSerializer(read_only=True)
 	class Meta:
 		model = Article
