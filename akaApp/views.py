@@ -87,7 +87,7 @@ class addFav(APIView):
 class CommetViews(viewsets.ModelViewSet):
 	permission_classes = [permissions.AllowAny,]
 	serializer_class = CommentSerilaizer
-	queryset = Comment.objects.all()
+	queryset = Comment.objects.all().order_by('-date')
 	filter_backends = [DjangoFilterBackend]
 	search_fields = ['article', 'author']
 	filter_fields = ('article', 'author')

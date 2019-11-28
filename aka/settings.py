@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_filters',
     'taggit',
     'taggit_serializer',
+    'channels',
 ]
 
 
@@ -110,7 +111,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'aka.wsgi.application'
+# ASGI_APPLICATION = "aka.routing.application"
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
