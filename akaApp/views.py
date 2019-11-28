@@ -85,7 +85,7 @@ class addFav(APIView):
 
 
 class CommetViews(viewsets.ModelViewSet):
-	permission_classes = [permissions.AllowAny,]
+	permission_classes = [permissions.IsAuthenticated,]
 	serializer_class = CommentSerilaizer
 	queryset = Comment.objects.all()
 	filter_backends = [DjangoFilterBackend]

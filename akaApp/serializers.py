@@ -16,7 +16,6 @@ class CommSerilaizer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
 	tags = TagListSerializerField()
-	comment = CommSerilaizer(many=True, read_only=True)
 	author = UserDSerializer(read_only=True)
 	class Meta:
 		model = Article
@@ -36,6 +35,7 @@ class addFavSer(serializers.Serializer):
 
 
 class CommentSerilaizer(serializers.ModelSerializer):
+	author = UserDSerializer(read_only=True)
 	class Meta:
 		model = Comment
 		fields = "__all__"
