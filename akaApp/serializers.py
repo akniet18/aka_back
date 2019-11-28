@@ -20,7 +20,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Article
 		fields = ('id', 'title', 'text', 'views', 'author', 'favorite', 'tags', 'comment', 'date')
-		read_only_fields  = ('author', 'favorite', 'views')
+		read_only_fields  = ('author', 'favorite', 'views', 'comment')
 
 
 
