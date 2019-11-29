@@ -7,4 +7,5 @@ class User(AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
     email = models.EmailField(unique=True)
     avatar = models.ImageField(upload_to = 'media/avatar', blank=True, null=True)
+    about = models.TextField(blank=True, null=True)
 
