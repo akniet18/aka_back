@@ -11,13 +11,11 @@ from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from rest_framework import filters
 
-
 User = get_user_model()
 
 
 class ArticleViewset(viewsets.ModelViewSet):
 	permission_classes = [permissions.IsAuthenticatedOrReadOnly,]
-	# authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 	serializer_class = ArticleSerializer
 	queryset = Article.objects.all().order_by('-date')
@@ -33,9 +31,16 @@ class ArticleViewset(viewsets.ModelViewSet):
 				title=s.validated_data['title'], 
 				text=s.validated_data['text'], 
 				author=request.user,
+				is_blog=s.validated_data['is_blog'],
+				is_q=s.validated_data['is_q'],
+				is_news = s.validated_data['is_news']
 				# tags=s.validated_data['tags']
 			)
-			a.tags.set(*s.validated_data['tags'])
+			# a.tags.set(*s.validated_data['tags'])
+			print(s.validated_data['tags'])
+			for i in str(s.validated_data['tags'][0]).split(","):
+				print(i)
+				a.tags.add(i.strip())
 			return Response({'status': "created"})
 		else:
 			return Response(s.errors)

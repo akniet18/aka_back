@@ -24,7 +24,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 	author = UserDSerializer(read_only=True)
 	class Meta:
 		model = Article
-		fields = ('id', 'title', 'text', 'views', 'author', 'favorite', 'tags', 'comment', 'date')
+		fields = ('id', 'title', 'text', 'views', 'author', 'favorite', 'tags', 'comment', 'date', "is_blog", 'is_q', 'is_news')
 		read_only_fields  = ('author', 'favorite', 'views', 'comment')
 
 

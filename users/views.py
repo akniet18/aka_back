@@ -85,7 +85,6 @@ class Login(APIView):
 
 class getUser(RetrieveUpdateDestroyAPIView):
 	permission_classes = [permissions.IsAuthenticated]
-	authentication_classes = [SessionAuthentication, TokenAuthentication]
 	serializer_class = UserSerializer
 	queryset = User.objects.all()
 

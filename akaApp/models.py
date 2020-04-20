@@ -12,6 +12,9 @@ class Article(models.Model):
 	text = RichTextUploadingField()
 	favorite = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='fav', blank=True)
 	tags = TaggableManager()
+	is_blog = models.BooleanField(default=False)
+	is_q = models.BooleanField(default=False)
+	is_news = models.BooleanField(default=False)
 
 	def comment(self):
 		return self.comment.all()
