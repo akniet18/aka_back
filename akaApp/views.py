@@ -46,6 +46,22 @@ class ArticleViewset(viewsets.ModelViewSet):
 			return Response(s.errors)
 
 
+class getArticles(APIView):
+	permission_classes = [permissions.AllowAny,]
+
+	def get(self, request, type_art):
+		print(type_art)
+		if type_art == "blog":
+			a = Article.objects.filter(is_blog = True)
+		elif type_art == "news":
+			a = Article.objects.filter(is_news = True)
+		else:
+			a = Article.objects.filter(is_q = True)
+		s = ArticleSerializer(a, many = True)
+		return Response(s.data)
+
+
+
 class TagViews(APIView):
 	permission_classes = [permissions.AllowAny,]
 

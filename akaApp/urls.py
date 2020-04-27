@@ -14,6 +14,7 @@ router2.register(r'comments', CommetViews, basename='comment')
 urlpatterns = [
 	path('', include(router.urls)),
 	path('', include(router2.urls)),
+	path('get/<type_art>', getArticles.as_view()),
 	path('article/add/', addFav.as_view()),
 	path('tags/', TagViews.as_view()),
 
