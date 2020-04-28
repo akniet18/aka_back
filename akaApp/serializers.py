@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from users.serializers import *
+from rest_framework_recursive.fields import RecursiveField
 
 
 class CommSerilaizer(serializers.ModelSerializer):
@@ -38,10 +39,14 @@ class addFavSer(serializers.Serializer):
 	id = serializers.IntegerField()
 
 
-
 class CommentSerilaizer(serializers.ModelSerializer):
 	author = UserDSerializer(read_only=True)
+	children = RecursiveField(many=True, required=False)
+
 	class Meta:
 		model = Comment
-		fields = "__all__"
+		fields = ("id", "text", "author", "children", "date", "article")
 		read_only_fields  = ('author', 'date')
+
+
+	

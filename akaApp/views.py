@@ -110,7 +110,8 @@ class addFav(APIView):
 class CommetViews(viewsets.ModelViewSet):
 	permission_classes = [permissions.AllowAny,]
 	serializer_class = CommentSerilaizer
-	queryset = Comment.objects.all().order_by('-date')
+	queryset = Comment.objects.root_nodes()
+	print(queryset.get_cached_trees())
 	filter_backends = [DjangoFilterBackend]
 	search_fields = ['article', 'author']
 	filter_fields = ('article', 'author')
@@ -119,7 +120,7 @@ class CommetViews(viewsets.ModelViewSet):
 		s = CommentSerilaizer(data=request.data)
 		if s.is_valid():
 			parent_commment = None
-			parent_commment = s.validated_data['parent']
+			parent_commment = s.validated_data.get("parent", None)
 			# if Comment.objects.filter(pk=s.validated_data['parent']).exists():
 				# parent_commment = Comment.objects.get(pk=s.validated_data['parent'])
 			article = None
