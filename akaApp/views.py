@@ -33,7 +33,7 @@ class ArticleViewset(viewsets.ModelViewSet):
 				author=request.user,
 				is_blog=s.validated_data['is_blog'],
 				is_q=s.validated_data['is_q'],
-				is_news = s.validated_data['is_news']
+				is_news = False
 				# tags=s.validated_data['tags']
 			)
 			# a.tags.set(*s.validated_data['tags'])
@@ -57,6 +57,9 @@ class getArticles(APIView):
 			a = Article.objects.filter(is_news = True)
 		else:
 			a = Article.objects.filter(is_q = True)
+
+
+			
 		s = ArticleSerializer(a, many = True)
 		return Response(s.data)
 
